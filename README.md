@@ -1,7 +1,7 @@
 # DESCRIPTION
-This application tracks if there are some discounts on poe.trade.
-It searches poe.trade for the items you are interested in, reading from the items list;
-it checks whether some items' prices are below of the specified one, and notify you if there is a match.
+This application tracks if there are discounts on poe.trade.
+It continuously searches poe.trade for the items you are interested in, reading from the items list;
+it checks whether the items' prices are below the specified ones, and notify you if there is a match.
 
 Only works for uniques items (for now).
 
@@ -15,7 +15,8 @@ Only works for uniques items (for now).
 	Example:
 	http://poe.trade/search/ihohametootono 10 chaos
 
-	(currency names are 'chaos', 'exalted')
+	(currency names are 'chaos', 'exalted';
+	you can add comments after the price)
 
 - run:
 	python3 poe_watch.py
