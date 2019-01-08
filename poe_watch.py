@@ -8,7 +8,8 @@ if __name__ == "__main__":
 	currencies = ['chaos', 'exalted']
 
 	# reads from items list file: url and currency
-	custom_items = [ (line.split(' ')[0], line.split(' ')[1:3]) for line in open(items_filename).read().split(os.linesep) if len(line) != 0 ]
+	#custom_items = [ (line.split(' ')[0], line.split(' ')[1:3]) for line in open(items_filename).read().split(os.linesep) if len(line) != 0 ]
+	custom_items = [ (line.split(' ')[0], line.split(' ')[1:3]) for line in open(items_filename).read().split('\n') if len(line) != 0 ]
 
 	# LOOP
 	n = 0
@@ -38,7 +39,6 @@ if __name__ == "__main__":
 
 			# for every item in poe.trade, price check
 			for i, item in enumerate(poe_trade_items):
-				#pyperclip.copy('@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')+' (stash tab \"' + item.get('data-tab')+ '\"; position: left ' + item.get('data-x')+ ', top ' +item.get('data-y') +')')
 				actual_value = item.get('data-buyout')
 				actual_currency = actual_value.split(' ')[1].lower()
 				actual_value = float(actual_value.split(' ')[0])
@@ -52,6 +52,7 @@ if __name__ == "__main__":
 				# notifies only if currency type is less valuable of that specified, or equals (but less quantity)
 				if currencies.index(actual_currency) < currencies.index(custom_currency) \
 				or currencies.index(actual_currency) == currencies.index(custom_currency) and actual_value <= custom_value:
+					#pyperclip.copy('@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')+' (stash tab \"' + item.get('data-tab')+ '\"; position: left ' + item.get('data-x')+ ', top ' +item.get('data-y') +')')
 					sys.stdout.write(os.linesep + item.get('data-buyout') + ": " + item_name + " (@" + item.get('data-ign') + ")" + os.linesep)
 					n = 0
 					custom_items.remove(item_data)
