@@ -1,25 +1,27 @@
 # python3
 
-import requests, os, sys
+import requests, os, sys, time
 from bs4 import BeautifulSoup
 
 if __name__ == "__main__":
-	items_filename = "items_list.txt"
+	# CONFIGURATIONS
+	config_filename = "config.txt"
+	config = { line.split('=')[0]: line.split('=')[1] for line in open(config_filename).read().split(os.linesep) if len(line) != 0 }
+
+	items_file = config["items_file"]
 	currencies = ['chaos', 'exalted']
 
 	# reads from items list file: url and currency
 	#custom_items = [ (line.split(' ')[0], line.split(' ')[1:3]) for line in open(items_filename).read().split(os.linesep) if len(line) != 0 ]
-	custom_items = [ (line.split(' ')[0], line.split(' ')[1:3]) for line in open(items_filename).read().split('\n') if len(line) != 0 ]
+	custom_items = [ (line.split(' ')[0], line.split(' ')[1:3]) for line in open(items_file).read().split(config["linesep"]) if len(line) != 0 ]
 
 	# LOOP
 	n = 0
 	while True:
 		# output feedback
 		if n == 1:
-			sys.stdout.write("Keep searching...")
-		elif n > 1 and n%2 == 0:
-			sys.stdout.write('.')
-		sys.stdout.flush()
+			sys.stdout.write("Searching...")
+			sys.stdout.flush()
 
 		# poe.trade search for every item in the list
 		for item_data in custom_items:
@@ -52,10 +54,18 @@ if __name__ == "__main__":
 				# notifies only if currency type is less valuable of that specified, or equals (but less quantity)
 				if currencies.index(actual_currency) < currencies.index(custom_currency) \
 				or currencies.index(actual_currency) == currencies.index(custom_currency) and actual_value <= custom_value:
-					#pyperclip.copy('@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')+' (stash tab \"' + item.get('data-tab')+ '\"; position: left ' + item.get('data-x')+ ', top ' +item.get('data-y') +')')
-					sys.stdout.write(os.linesep + item.get('data-buyout') + ": " + item_name + " (@" + item.get('data-ign') + ")" + os.linesep)
-					n = 0
+					try:
+						message = '@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')+' (stash tab \"' + item.get('data-tab')+ '\"; position: left ' + item.get('data-x')+ ', top ' +item.get('data-y') +')'
+					except TypeError:
+						message = '@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')
+					#pyperclip.copy(message)
+					open(config["out_file"], 'a').write(item_name + " (" + item.get('data-buyout') + ")" + os.linesep + poe_trade_url + \
+						os.linesep + message + os.linesep)
+					sys.stdout.write('='*80 + os.linesep + item.get('data-buyout') + ": " + item_name + " (@" + item.get('data-ign') + ")" \
+						+ os.linesep + "(Message copied to clipboard. Or see " + config["out_file"]  + ")" + os.linesep + '='*80 + os.linesep + os.linesep)
 					custom_items.remove(item_data)
+					n = 0
 					break
 
 		n += 1
+		time.sleep(float(config["update_freq"]))

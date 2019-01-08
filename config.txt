@@ -1,0 +1,4 @@
+items_file=items_list.txt
+out_file=messages.txt
+update_freq=0.5
+linesep=\n
