@@ -62,5 +62,6 @@ Only works for uniques items (for now).
 
 # TODO
 
-- conversion functions for popular currencies (chaos to ex and vice)
+- write wannabuy message in out file
 
+- conversion functions for popular currencies (chaos to ex and vice)

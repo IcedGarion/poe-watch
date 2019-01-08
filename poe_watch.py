@@ -37,21 +37,24 @@ if __name__ == "__main__":
 			item_name = ""
 
 			# for every item in poe.trade, price check
-			for item in poe_trade_items:
+			for i, item in enumerate(poe_trade_items):
 				#pyperclip.copy('@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')+' (stash tab \"' + item.get('data-tab')+ '\"; position: left ' + item.get('data-x')+ ', top ' +item.get('data-y') +')')
 				actual_value = item.get('data-buyout')
 				actual_currency = actual_value.split(' ')[1].lower()
 				actual_value = float(actual_value.split(' ')[0])
 				item_name = item.get('data-name')
 
+				# output feedback
+				if i == 0 and n == 0:
+					sys.stdout.write("( " + item_name + " )" + os.linesep)
+					sys.stdout.flush()
+
 				# notifies only if currency type is less valuable of that specified, or equals (but less quantity)
 				if currencies.index(actual_currency) < currencies.index(custom_currency) \
 				or currencies.index(actual_currency) == currencies.index(custom_currency) and actual_value <= custom_value:
-					sys.stdout.write(item.get('data-buyout') + ": " + item.get('data-name') + " (@" + item.get('data-ign') + ")")
-
-			# output feedback
-			if n == 0:
-				sys.stdout.write("( " + item_name + " )\n")
-				sys.stdout.flush()
+					sys.stdout.write(os.linesep + item.get('data-buyout') + ": " + item_name + " (@" + item.get('data-ign') + ")" + os.linesep)
+					n = 0
+					custom_items.remove(item_data)
+					break
 
 		n += 1
