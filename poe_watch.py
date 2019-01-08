@@ -13,6 +13,7 @@ if __name__ == "__main__":
 	# LOOP
 	n = 0
 	while True:
+		# output feedback
 		if n == 1:
 			sys.stdout.write("Keep searching...")
 		elif n > 1 and n%2 == 0:
@@ -48,6 +49,7 @@ if __name__ == "__main__":
 				or currencies.index(actual_currency) == currencies.index(custom_currency) and actual_value <= custom_value:
 					sys.stdout.write(item.get('data-buyout') + ": " + item.get('data-name') + " (@" + item.get('data-ign') + ")")
 
+			# output feedback
 			if n == 0:
 				sys.stdout.write("( " + item_name + " )\n")
 				sys.stdout.flush()
