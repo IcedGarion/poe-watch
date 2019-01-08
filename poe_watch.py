@@ -1,6 +1,6 @@
 # python3
 
-import requests, os, sys, time
+import requests, os, sys, time, pyperclip
 from bs4 import BeautifulSoup
 
 if __name__ == "__main__":
@@ -54,11 +54,13 @@ if __name__ == "__main__":
 				# notifies only if currency type is less valuable of that specified, or equals (but less quantity)
 				if currencies.index(actual_currency) < currencies.index(custom_currency) \
 				or currencies.index(actual_currency) == currencies.index(custom_currency) and actual_value <= custom_value:
+					# ITEM FOUND: builds message
 					try:
 						message = '@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')+' (stash tab \"' + item.get('data-tab')+ '\"; position: left ' + item.get('data-x')+ ', top ' +item.get('data-y') +')'
 					except TypeError:
 						message = '@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')
-					#pyperclip.copy(message)
+					# copy message to clipboard & writes to out_file
+					pyperclip.copy(message)
 					open(config["out_file"], 'a').write(item_name + " (" + item.get('data-buyout') + ")" + os.linesep + poe_trade_url + \
 						os.linesep + message + os.linesep)
 					sys.stdout.write('='*80 + os.linesep + item.get('data-buyout') + ": " + item_name + " (@" + item.get('data-ign') + ")" \
