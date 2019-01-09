@@ -63,7 +63,7 @@ if __name__ == "__main__":
 						# copy message to clipboard & writes to out_file
 						pyperclip.copy(message)
 						open(config["out_file"], 'a').write(item_name + " (" + item.get('data-buyout') + ")" + os.linesep + poe_trade_url + \
-							os.linesep + message + os.linesep)
+							os.linesep + message + os.linesep + os.linesep)
 						sys.stdout.write(os.linesep + '='*80 + os.linesep + item.get('data-buyout') + ": " + item_name + " (@" + item.get('data-ign') + ")" \
 							+ os.linesep + "(Message copied to clipboard. Or see " + config["out_file"]  + ")" + os.linesep + '='*80 + os.linesep + os.linesep)
 						custom_items.remove(item_data)
