@@ -1,4 +1,4 @@
-# DESCRIPTION
+## DESCRIPTION
 
 This application tracks if there are discounts on poe.trade.
 
@@ -14,21 +14,21 @@ Only works for uniques items (for now).
 
 
 
-# INSTALL
+## INSTALL
 
 
-	Install python3:
-	https://www.python.org/downloads/ (make sure to check "Add python3 to PATH")
-
-
-
-	Install required python libraries:
-	double-click install.bat
+- Install python3:
+  https://www.python.org/downloads/ (make sure to check "Add python3 to PATH")
 
 
 
+- Install required python libraries:
+  double-click install.bat
 
-# SETUP & CONFIGURE
+
+
+
+## SETUP & CONFIGURE
 
 - put some URLs in items_list.txt file:
 
@@ -52,16 +52,24 @@ Only works for uniques items (for now).
 
 
 
-# RUN:
-	Double click "run.bat"
+## RUN:
+- Double click "run.bat"
+
+
+
+# DETAILED DESCRIPTION
+After you configured items_list.txt properly, launch the script and wait for it to find a discounted item.
+If the program is stuck on 'Searching...' it means that there is no item match. Leave it in background and wait.
+When an item is found, a text appears: the last buying message is copied to your clipboard and you can paste it (CTRL+V) in poe chat "@seller Hi, i would like to buy...".
+You can even open messages.txt for a detailed response of all the results found. 
+
+You can change the update frequency in config.txt: default is 0.5 (seconds).
+If poe lags or you have network issues set it to, say, 10. It means that once every 10 seconds the script checks on poe.trade for the items you listed .
 
 
 
 
+## TODO
 
-
-# TODO
-
-- write wannabuy message in out file
 
 - conversion functions for popular currencies (chaos to ex and vice)
