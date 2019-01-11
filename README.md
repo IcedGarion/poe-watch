@@ -71,5 +71,6 @@ If poe lags or you have network issues set it to, say, 10. It means that once ev
 
 ## TODO
 
+- better notify system
 
 - conversion functions for popular currencies (chaos to ex and vice)
