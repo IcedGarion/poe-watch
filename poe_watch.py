@@ -1,6 +1,6 @@
 # python3
 
-import requests, os, sys, time, pyperclip, datetime
+import requests, os, sys, time, pyperclip, datetime, ctypes
 from bs4 import BeautifulSoup
 
 if __name__ == "__main__":
@@ -60,16 +60,27 @@ if __name__ == "__main__":
 							message = '@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')+' (stash tab \"' + item.get('data-tab')+ '\"; position: left ' + item.get('data-x')+ ', top ' +item.get('data-y') +')'
 						except TypeError:
 							message = '@'+item.get('data-ign') + ' Hi, I would like to buy your ' + item.get('data-name') + ' listed for ' + item.get('data-buyout') + ' in ' + item.get('data-league')
-						# copy message to clipboard & writes to out_file
+
+						# copy message to clipboard
 						pyperclip.copy(message)
 
+						# write to out_file
 						now = datetime.datetime.now()
 						open(config["out_file"], 'a').write(item_name + " (" + item.get('data-buyout') + ")" + os.linesep + poe_trade_url \
 							+ os.linesep + message + os.linesep + os.linesep)
+
+						# write to console
 						sys.stdout.write(os.linesep + '='*80 + os.linesep \
 							+ '[' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second) + ']' + os.linesep \
 							+ item.get('data-buyout') + ": " + item_name + " (@" + item.get('data-ign') + ")" \
 							+ os.linesep + "(Message copied to clipboard. Or see " + config["out_file"]  + ")" + os.linesep + '='*80 + os.linesep + os.linesep)
+
+						# messagebox
+						try:
+							ctypes.windll.user32.MessageBoxW(0, "text", "title", 0)
+						except Exception:
+							print(Exception.message)
+
 						custom_items.remove(item_data)
 						n = 0
 						break
