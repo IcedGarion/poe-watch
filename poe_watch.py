@@ -76,10 +76,10 @@ if __name__ == "__main__":
 							+ os.linesep + "(Message copied to clipboard. Or see " + config["out_file"]  + ")" + os.linesep + '='*80 + os.linesep + os.linesep)
 
 						# messagebox
-						try:
-							ctypes.windll.user32.MessageBoxW(0, "text", "title", 0)
-						except Exception:
-							print(Exception.message)
+						ctypes.windll.user32.MessageBoxW(0, item.get("data-buyout") + " (@" + item.get("data-ign") + ")\n"
+							+ item.get("data-name") + "\n\n"
+							+ "Message copyed to your clipboard\n(Or see " + config["out_file"] + " for more)."
+							, "Poe-watch: ITEM FOUND!", 0)
 
 						custom_items.remove(item_data)
 						n = 0
